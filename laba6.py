@@ -1,14 +1,24 @@
-###############1 задание ###########
+def LegitCheck():
+    while True:
+        try:
+            m = int(input("Введите кол-во элементов в списке: "))
+            if m > 0:
+                break
+            else:
+                print("Введено некоректное число")
+                continue
+        except ValueError:
+            print("Что-то не то вы ввели!")
+    return m
+##############1 задание ###########
 print("1 zadanie")
 s = input("Введите строку S: ")
 s0 = input("Введите строку S0: ")
 print(s0 in s)
-
-
 #############2 Задание####################
 print("Zadanie 2")
-glaslowcaseEng = 'aeiou'
-glaslowcaseRus= "уеыаоэяию"
+sogllowcaseEng = 'qwrtpsdfghjklzxcvbnmQWRTYPSDFGHJKLZXCVBNM'
+sogllowcaseRus= "йцукнгшщзхфвпрлджчсмтбЙЦКНГШЩЗХФВПРЛДЖЧСМТБ"
 while True:
     try:
         n = int(input("Сколько слов будет? "))
@@ -24,14 +34,12 @@ def craeateslice(n):
     for i in range(n):
         words.append(input("Введите слово: "))
     return words
-
 def countglas(word):
     counter = 0
     for i in range(len(word)):
-        if str(word[i]).lower() in glaslowcaseEng or str(word[i]).lower() in glaslowcaseRus:
+        if word[i] in sogllowcaseEng or word[i] in sogllowcaseRus:
             counter += 1
     return counter/len(word)
-
 words = craeateslice(n)
 answer = ''
 maxCap = -100
@@ -39,33 +47,23 @@ for i in range(len(words)):
     if countglas(words[i]) > maxCap:
         answer = words[i]
         maxCap = countglas(words[i])
-print(f"в слове '{answer}' самая большая доля гласных")
-
+print(f"в слове '{answer}' самая большая доля согласных")
 #############3 Задание####################
 print("Zadanie 3")
 from random import randint
-while True:
-    try:
-        m =  int(input("Введите кол-во элементов в списке: "))
-        if m >0:
-            break
-        else:
-            print("Введено некоректное число")
-            continue
-    except ValueError:
-        print("Что-то не то вы ввели!")
-
-def createrandomslice(m):
+def createrandomslice(number):
     numbres = []
-    for i in range(m):
+    for i in range(number):
         numbres.append(randint(0, 10))
     return numbres
-
-numbers = createrandomslice(m)
-
+num = LegitCheck()
+numbers = createrandomslice(num)
 pointer1 = 0
 pointer2 = 0
-countZero = sum(list(map(lambda x: 1 if x == 0 else 0, numbers)))
+countZero = 0
+for i in range(len(numbers)):
+    if numbers[i] == 0:
+        countZero += 1
 print(f"получившийся список: {numbers}")
 if countZero >= 2:
     for i in range(len(numbers)):
@@ -87,13 +85,14 @@ if countZero >= 2:
 if countZero <2:
     print("в полученном списке меньше 2х нулевых элементов ")
 
-newnumbers= []
-for i in range(1, len(numbers),2):
-    newnumbers.append(numbers[i])
-for i in range(0, len(numbers),2):
-    newnumbers.append(numbers[i])
-print(f"список до: {numbers}")
-print(f"список после: {newnumbers}")
+
+temp = 0
+for i in range(0,len(numbers)-1, 2):
+    temp = numbers[i]
+    numbers[i] = numbers[i+1]
+    numbers[i+1] = temp
+print(numbers)
+
 
 
 
